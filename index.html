@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Calm</title>
 <link rel="stylesheet" href="styles.css" />
+<link rel="stylesheet" href="views.css" />
 </head>
 <body>
   <canvas id="aurora" aria-hidden="true"></canvas>
@@ -20,6 +21,7 @@
       <button data-mode="ground" class="mode-item"><span>🌱</span> Ground</button>
       <button data-mode="worry" class="mode-item"><span>📝</span> Worries</button>
       <button data-mode="canvas" class="mode-item"><span>🎨</span> Canvas</button>
+      <button data-mode="scan" class="mode-item"><span>🧘</span> Body scan</button>
     </div>
 
     <button class="section-toggle" id="mixSectionToggle" aria-expanded="true">
@@ -55,6 +57,7 @@
     <div class="subtitle">follow the orb</div>
   </header>
 
+  <main class="views">
   <section class="view active" id="view-breathe">
     <div class="stage">
       <div class="orb-wrap">
@@ -123,12 +126,45 @@
     </footer>
   </section>
 
+  <section class="view" id="view-scan">
+    <div class="scan-stage">
+      <svg class="scan-body" id="scanBody" viewBox="0 0 100 240" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle cx="50" cy="20" r="13" data-region="head face"/>
+        <rect x="44" y="32" width="12" height="9" rx="2" data-region="neck"/>
+        <ellipse cx="50" cy="48" rx="26" ry="6" data-region="shoulders"/>
+        <ellipse cx="22" cy="78" rx="5" ry="22" data-region="arms"/>
+        <ellipse cx="78" cy="78" rx="5" ry="22" data-region="arms"/>
+        <rect x="34" y="54" width="32" height="32" rx="9" data-region="chest"/>
+        <rect x="36" y="86" width="28" height="20" rx="6" data-region="belly"/>
+        <ellipse cx="50" cy="115" rx="20" ry="9" data-region="hips"/>
+        <ellipse cx="40" cy="155" rx="7" ry="30" data-region="legs"/>
+        <ellipse cx="60" cy="155" rx="7" ry="30" data-region="legs"/>
+        <ellipse cx="40" cy="195" rx="9" ry="5" data-region="feet"/>
+        <ellipse cx="60" cy="195" rx="9" ry="5" data-region="feet"/>
+      </svg>
+      <div class="scan-name" id="scanName">Crown</div>
+      <div class="scan-prompt" id="scanPrompt">The top of your head. Feel the gentle weight of your skull.</div>
+      <div class="scan-progress-track"><div class="scan-progress" id="scanProgress"></div></div>
+    </div>
+    <footer>
+      <div class="controls">
+        <button id="scanPlay" class="primary">Play</button>
+        <button id="scanSkip">Skip</button>
+        <button id="scanRestart">Restart</button>
+      </div>
+      <div class="hint">Lie down or sit comfortably. Let your attention move with the glow.</div>
+    </footer>
+  </section>
+
+  </main>
+
   <script src="sounds.js"></script>
   <script src="breath.js"></script>
   <script src="ground.js"></script>
   <script src="worry.js"></script>
   <script src="canvas.js"></script>
   <script src="aurora.js"></script>
+  <script src="scan.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

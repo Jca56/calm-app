@@ -8,15 +8,23 @@
     ground: '5 · 4 · 3 · 2 · 1',
     worry: 'let it out',
     canvas: 'drag to bloom',
+    scan: 'head to toes',
   };
 
   function setMode(mode) {
     if (!SUBTITLES[mode]) return;
     modeBtns.forEach(b => b.classList.toggle('active', b.dataset.mode === mode));
     views.forEach(v => v.classList.toggle('active', v.id === 'view-' + mode));
-    if (subtitleEl) subtitleEl.textContent = SUBTITLES[mode];
+    if (subtitleEl) {
+      subtitleEl.classList.add('fading');
+      setTimeout(() => {
+        subtitleEl.textContent = SUBTITLES[mode];
+        subtitleEl.classList.remove('fading');
+      }, 600);
+    }
     if (window.Canvas) window.Canvas.setActive(mode === 'canvas');
     if (window.Aurora) window.Aurora.setActive(mode !== 'canvas');
+    if (window.Scan) window.Scan.setActive(mode === 'scan');
   }
 
   modeBtns.forEach(btn => {
@@ -66,7 +74,7 @@
   // ---- keyboard shortcuts ----
   // B/G/W/C → switch tabs · Space → start/stop breathing · Esc → close menu
   // Skip while typing in inputs / textareas so worry-dump and sliders aren't hijacked.
-  const SHORTCUTS = { b: 'breathe', g: 'ground', w: 'worry', c: 'canvas' };
+  const SHORTCUTS = { b: 'breathe', g: 'ground', w: 'worry', c: 'canvas', s: 'scan' };
   document.addEventListener('keydown', (e) => {
     if (e.target.matches('input, textarea')) return;
     if (e.metaKey || e.ctrlKey || e.altKey) return;

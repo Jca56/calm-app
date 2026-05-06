@@ -3,20 +3,44 @@
 window.Aurora = (function () {
   const canvas = document.getElementById('aurora');
   const ctx = canvas.getContext('2d');
-  const dpr = window.devicePixelRatio || 1;
+  // render at half-res — aurora is all soft gradients, pixel detail is wasted.
+  // CSS stretches the canvas back up to fullscreen.
+  const RENDER_SCALE = 0.5;
+  const FRAME_INTERVAL = 1000 / 30; // cap to 30fps
 
   let active = false;
   let rafId = null;
   let stars = [];
+  let blobBuffers = [];
   let w = 0, h = 0;
+  let lastFrame = 0;
 
   function resize() {
-    w = window.innerWidth;
-    h = window.innerHeight;
-    canvas.width = Math.floor(w * dpr);
-    canvas.height = Math.floor(h * dpr);
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    w = Math.floor(window.innerWidth * RENDER_SCALE);
+    h = Math.floor(window.innerHeight * RENDER_SCALE);
+    canvas.width = w;
+    canvas.height = h;
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
     initStars();
+    buildBlobBuffers();
+  }
+
+  function buildBlobBuffers() {
+    const r = Math.max(w, h) * 0.45;
+    const size = Math.ceil(r * 2);
+    blobBuffers = BLOBS.map(b => {
+      const buf = document.createElement('canvas');
+      buf.width = size;
+      buf.height = size;
+      const bctx = buf.getContext('2d');
+      const grd = bctx.createRadialGradient(r, r, 0, r, r, r);
+      grd.addColorStop(0,    `hsla(${b.hue}, ${b.sat}%, ${b.lit}%, 0.20)`);
+      grd.addColorStop(0.45, `hsla(${b.hue}, ${b.sat}%, ${b.lit}%, 0.07)`);
+      grd.addColorStop(1,    `hsla(${b.hue}, ${b.sat}%, ${b.lit}%, 0)`);
+      bctx.fillStyle = grd;
+      bctx.fillRect(0, 0, size, size);
+      return { buf, r };
+    });
   }
 
   function initStars() {
@@ -44,21 +68,19 @@ window.Aurora = (function () {
   function frame(t) {
     if (!active) return;
     rafId = requestAnimationFrame(frame);
+    if (t - lastFrame < FRAME_INTERVAL) return;
+    lastFrame = t;
     const time = t / 1000;
 
     ctx.clearRect(0, 0, w, h);
 
     ctx.globalCompositeOperation = 'screen';
-    for (const b of BLOBS) {
+    for (let i = 0; i < BLOBS.length; i++) {
+      const b = BLOBS[i];
+      const { buf, r } = blobBuffers[i];
       const cx = (b.px + Math.sin(time * b.sx + b.ph) * b.ax) * w;
       const cy = (b.py + Math.cos(time * b.sy + b.ph) * b.ay) * h;
-      const r = Math.max(w, h) * 0.45;
-      const grd = ctx.createRadialGradient(cx, cy, 0, cx, cy, r);
-      grd.addColorStop(0,    `hsla(${b.hue}, ${b.sat}%, ${b.lit}%, 0.20)`);
-      grd.addColorStop(0.45, `hsla(${b.hue}, ${b.sat}%, ${b.lit}%, 0.07)`);
-      grd.addColorStop(1,    `hsla(${b.hue}, ${b.sat}%, ${b.lit}%, 0)`);
-      ctx.fillStyle = grd;
-      ctx.fillRect(0, 0, w, h);
+      ctx.drawImage(buf, cx - r, cy - r);
     }
     ctx.globalCompositeOperation = 'source-over';
 
@@ -76,6 +98,7 @@ window.Aurora = (function () {
     canvas.style.opacity = on ? '1' : '0';
     if (on) {
       resize();
+      lastFrame = 0;
       rafId = requestAnimationFrame(frame);
     } else {
       cancelAnimationFrame(rafId);
