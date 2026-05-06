@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Calm</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <button id="mixerToggle" class="mixer-toggle" aria-label="Toggle ambient sounds">
+    <span class="bars"><span></span><span></span><span></span></span>
+  </button>
+
+  <aside class="mixer" id="mixer">
+    <h2>Mode</h2>
+    <div class="mode-list">
+      <button data-mode="breathe" class="mode-item active"><span>🫧</span> Breathe</button>
+      <button data-mode="ground" class="mode-item"><span>🌱</span> Ground</button>
+      <button data-mode="worry" class="mode-item"><span>📝</span> Worries</button>
+      <button data-mode="canvas" class="mode-item"><span>🎨</span> Canvas</button>
+    </div>
+
+    <button class="section-toggle" id="mixSectionToggle" aria-expanded="true">
+      <span>Ambient Mix</span>
+      <span class="chev">▾</span>
+    </button>
+    <div class="section-body" id="mixSectionBody">
+    <div class="channel" data-sound="rain">
+      <div class="channel-label"><span><span class="icon">🌧️</span> Rain</span><span class="pct">0%</span></div>
+      <input type="range" min="0" max="100" value="0" />
+    </div>
+    <div class="channel" data-sound="waves">
+      <div class="channel-label"><span><span class="icon">🌊</span> Waves</span><span class="pct">0%</span></div>
+      <input type="range" min="0" max="100" value="0" />
+    </div>
+    <div class="channel" data-sound="wind">
+      <div class="channel-label"><span><span class="icon">🌬️</span> Wind</span><span class="pct">0%</span></div>
+      <input type="range" min="0" max="100" value="0" />
+    </div>
+    <div class="channel" data-sound="fire">
+      <div class="channel-label"><span><span class="icon">🔥</span> Fire</span><span class="pct">0%</span></div>
+      <input type="range" min="0" max="100" value="0" />
+    </div>
+    <div class="channel" data-sound="brown">
+      <div class="channel-label"><span><span class="icon">🟫</span> Deep Hum</span><span class="pct">0%</span></div>
+      <input type="range" min="0" max="100" value="0" />
+    </div>
+    </div>
+  </aside>
+
+  <header>
+    <h1>Calm</h1>
+    <div class="subtitle">follow the orb</div>
+  </header>
+
+  <section class="view active" id="view-breathe">
+    <div class="stage">
+      <div class="orb-wrap">
+        <div class="halo" id="halo"></div>
+        <div class="orb" id="orb"></div>
+        <div style="position: relative; display: flex; flex-direction: column; align-items: center;">
+          <div class="cue" id="cue">Ready</div>
+          <div class="count" id="count"></div>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <div class="pattern-row" id="patterns">
+        <button data-pattern="box" class="toggle active">Box · 4-4-4-4</button>
+        <button data-pattern="478" class="toggle">Calm · 4-7-8</button>
+        <button data-pattern="resonant" class="toggle">Resonant · 5-5</button>
+      </div>
+      <div class="controls">
+        <button id="startBtn" class="primary">Start</button>
+        <button id="stopBtn">Stop</button>
+      </div>
+      <div class="hint">Inhale through your nose, exhale through your mouth. There's nothing to do right now except this breath.</div>
+    </footer>
+  </section>
+
+  <section class="view" id="view-ground">
+    <div class="ground-stage">
+      <div class="ground-number" id="groundNumber">5</div>
+      <div class="ground-prompt" id="groundPrompt">5 things you can see</div>
+      <div class="ground-help" id="groundHelp">Look around. Take your time.</div>
+      <div class="ground-dots" id="groundDots"></div>
+    </div>
+
+    <footer>
+      <div class="controls">
+        <button id="groundNotice" class="primary">I noticed one</button>
+        <button id="groundRestart" style="display:none;">Restart</button>
+      </div>
+      <div class="hint">Name them out loud or just point your attention at them. Tap when you've noticed one.</div>
+    </footer>
+  </section>
+
+  <section class="view" id="view-worry">
+    <div class="worry-stage">
+      <div class="worry-flame" id="worryFlame">🔥</div>
+      <textarea id="worryText" placeholder="Whatever is rattling around in your head — type it out. No one sees this but you. Spelling doesn't matter. It doesn't have to make sense."></textarea>
+      <div class="controls">
+        <button id="worryRelease" class="primary">Release 🔥</button>
+        <button id="worryClear">Clear</button>
+      </div>
+      <div class="worry-list" id="worryList"></div>
+      <div class="worry-empty" id="worryEmpty">Nothing released yet. Worries you release stay private on this device.</div>
+    </div>
+  </section>
+
+  <section class="view" id="view-canvas">
+    <div class="canvas-stage">
+      <canvas id="calmCanvas"></canvas>
+      <div class="canvas-hint" id="canvasHint">drag anywhere</div>
+    </div>
+    <footer>
+      <div class="controls">
+        <button id="canvasClear">Clear canvas</button>
+      </div>
+    </footer>
+  </section>
+
+  <script src="sounds.js"></script>
+  <script src="breath.js"></script>
+  <script src="ground.js"></script>
+  <script src="worry.js"></script>
+  <script src="canvas.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
