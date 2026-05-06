@@ -220,6 +220,37 @@
 }
 .canvas-stage.painted .canvas-hint { opacity: 0; }
 
+.canvas-tools {
+  display: flex;
+  gap: 1.6rem;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+.tool-group {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+.tool-label {
+  font-size: 0.75rem;
+  color: var(--muted);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+.canvas-tools input[type="range"] { width: 130px; }
+.symmetry-row { display: flex; gap: 0.3rem; }
+.symmetry-row button {
+  padding: 0.4rem 0.7rem;
+  font-size: 0.85rem;
+  min-width: 2.4rem;
+  letter-spacing: 0.05em;
+}
+.symmetry-row button.active {
+  background: rgba(127, 212, 255, 0.22);
+  border-color: rgba(127, 212, 255, 0.5);
+}
+
 /* ---- worry dump ---- */
 .worry-stage {
   flex: 1;
@@ -246,6 +277,95 @@
 .worry-flame.burning {
   opacity: 1;
   transform: translate(-50%, -160%) scale(1.4);
+}
+.worry-flame.burning-all {
+  font-size: 6rem;
+  transform: translate(-50%, -120%) scale(2);
+  filter: drop-shadow(0 0 40px rgba(255, 160, 80, 0.9));
+  transition: opacity 0.4s ease, transform 1.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.worry-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 1.6rem;
+}
+.worry-streak {
+  font-size: 0.9rem;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+  transition: color 0.4s ease;
+}
+.worry-streak.active {
+  color: rgba(255, 190, 130, 0.95);
+  text-shadow: 0 0 14px rgba(255, 160, 80, 0.4);
+}
+.worry-burn-all {
+  padding: 0.4rem 0.9rem;
+  font-size: 0.85rem;
+  border-color: rgba(255, 160, 80, 0.3);
+  color: rgba(255, 200, 150, 0.9);
+  letter-spacing: 0.08em;
+}
+.worry-burn-all:hover {
+  background: rgba(255, 160, 80, 0.15);
+  border-color: rgba(255, 160, 80, 0.5);
+}
+.worry-burn-all.confirming {
+  background: rgba(255, 100, 50, 0.25);
+  border-color: rgba(255, 140, 80, 0.7);
+  color: rgba(255, 220, 180, 1);
+  animation: burnPulse 1s ease-in-out infinite;
+}
+@keyframes burnPulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 rgba(255, 140, 80, 0.4); }
+  50%      { opacity: 0.85; box-shadow: 0 0 14px rgba(255, 140, 80, 0.5); }
+}
+
+.worry-themes {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+.worry-themes:empty { display: none; }
+.theme-chip {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  padding: 0.3rem 0.8rem 0.3rem 0.85rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+.theme-chip:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text);
+}
+.theme-chip.active {
+  background: rgba(127, 212, 255, 0.22);
+  border-color: rgba(127, 212, 255, 0.5);
+  color: var(--text);
+}
+.theme-chip .count {
+  margin-left: 0.45rem;
+  padding: 0 0.4rem;
+  font-size: 0.72rem;
+  color: var(--muted);
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 999px;
+}
+.theme-chip.active .count { color: var(--text); }
+
+.worry-item.burning {
+  animation: burnUp 2s ease-in forwards;
+}
+@keyframes burnUp {
+  0%   { opacity: 1;   transform: translateY(0);     filter: blur(0)   brightness(1); }
+  35%  { opacity: 0.85;                              filter: blur(0)   brightness(1.4) hue-rotate(-15deg); }
+  100% { opacity: 0;   transform: translateY(-50px); filter: blur(8px) brightness(0.5); }
 }
 
 textarea#worryText {

@@ -104,11 +104,16 @@
   <section class="view" id="view-worry">
     <div class="worry-stage">
       <div class="worry-flame" id="worryFlame">🔥</div>
+      <div class="worry-header">
+        <div class="worry-streak" id="worryStreak"></div>
+        <button id="worryBurnAll" class="worry-burn-all" style="display:none;">Burn all 🔥</button>
+      </div>
       <textarea id="worryText" placeholder="Whatever is rattling around in your head — type it out. No one sees this but you. Spelling doesn't matter. It doesn't have to make sense."></textarea>
       <div class="controls">
         <button id="worryRelease" class="primary">Release 🔥</button>
         <button id="worryClear">Clear</button>
       </div>
+      <div class="worry-themes" id="worryThemes"></div>
       <div class="worry-list" id="worryList"></div>
       <div class="worry-empty" id="worryEmpty">Nothing released yet. Worries you release stay private on this device.</div>
     </div>
@@ -120,8 +125,25 @@
       <div class="canvas-hint" id="canvasHint">drag anywhere</div>
     </div>
     <footer>
+      <div class="canvas-tools">
+        <div class="tool-group">
+          <span class="tool-label">Brush</span>
+          <input type="range" id="canvasBrush" min="40" max="220" value="100" />
+        </div>
+        <div class="tool-group">
+          <span class="tool-label">Symmetry</span>
+          <div class="symmetry-row" id="canvasSymmetry">
+            <button data-sym="1" class="active">Off</button>
+            <button data-sym="4">4</button>
+            <button data-sym="6">6</button>
+            <button data-sym="8">8</button>
+            <button data-sym="12">12</button>
+          </div>
+        </div>
+      </div>
       <div class="controls">
-        <button id="canvasClear">Clear canvas</button>
+        <button id="canvasSave">Save 💾</button>
+        <button id="canvasClear">Clear</button>
       </div>
     </footer>
   </section>
