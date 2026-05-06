@@ -104,5 +104,8 @@ window.Breath = (function () {
   setOrbState('exhale', 1);
   showCue('Ready');
 
-  return { stop };
+  return {
+    start, stop,
+    toggle() { running ? stop() : start(); },
+  };
 })();

@@ -1,4 +1,4 @@
-// Top-level wiring: mode switcher (in menu panel) + sound mixer UI.
+// Top-level wiring: mode switcher (in menu panel) + sound mixer + keyboard shortcuts.
 (function () {
   const modeBtns = document.querySelectorAll('.mode-list .mode-item');
   const views = document.querySelectorAll('.view');
@@ -11,10 +11,12 @@
   };
 
   function setMode(mode) {
+    if (!SUBTITLES[mode]) return;
     modeBtns.forEach(b => b.classList.toggle('active', b.dataset.mode === mode));
     views.forEach(v => v.classList.toggle('active', v.id === 'view-' + mode));
     if (subtitleEl) subtitleEl.textContent = SUBTITLES[mode];
     if (window.Canvas) window.Canvas.setActive(mode === 'canvas');
+    if (window.Aurora) window.Aurora.setActive(mode !== 'canvas');
   }
 
   modeBtns.forEach(btn => {
@@ -24,10 +26,12 @@
   // ---- mixer / menu panel ----
   const mixer = document.getElementById('mixer');
   const mixerToggle = document.getElementById('mixerToggle');
-  mixerToggle.addEventListener('click', () => {
-    mixer.classList.toggle('open');
-    mixerToggle.classList.toggle('open');
-  });
+  function toggleMenu(force) {
+    const open = typeof force === 'boolean' ? force : !mixer.classList.contains('open');
+    mixer.classList.toggle('open', open);
+    mixerToggle.classList.toggle('open', open);
+  }
+  mixerToggle.addEventListener('click', () => toggleMenu());
 
   document.querySelectorAll('.channel').forEach(channel => {
     const slider = channel.querySelector('input[type="range"]');
@@ -58,4 +62,31 @@
       canvasStage.classList.add('painted');
     }, { once: true });
   }
+
+  // ---- keyboard shortcuts ----
+  // B/G/W/C → switch tabs · Space → start/stop breathing · Esc → close menu
+  // Skip while typing in inputs / textareas so worry-dump and sliders aren't hijacked.
+  const SHORTCUTS = { b: 'breathe', g: 'ground', w: 'worry', c: 'canvas' };
+  document.addEventListener('keydown', (e) => {
+    if (e.target.matches('input, textarea')) return;
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+
+    const k = e.key.toLowerCase();
+    if (SHORTCUTS[k]) {
+      e.preventDefault();
+      setMode(SHORTCUTS[k]);
+      return;
+    }
+    if (e.key === ' ' && document.getElementById('view-breathe').classList.contains('active')) {
+      e.preventDefault();
+      if (window.Breath) window.Breath.toggle();
+      return;
+    }
+    if (e.key === 'Escape') {
+      toggleMenu(false);
+    }
+  });
+
+  // boot: turn on aurora since breathe is the default mode
+  if (window.Aurora) window.Aurora.setActive(true);
 })();
