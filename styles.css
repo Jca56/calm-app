@@ -7,6 +7,40 @@
   --orb-3: #2a6f99;
   --text: #e8f4fb;
   --muted: #9fc3d6;
+
+  --surface: rgba(255, 255, 255, 0.08);
+  --surface-hover: rgba(255, 255, 255, 0.14);
+  --border: rgba(255, 255, 255, 0.18);
+  --border-hover: rgba(255, 255, 255, 0.30);
+  --weak-surface: rgba(255, 255, 255, 0.04);
+  --weak-border: rgba(255, 255, 255, 0.08);
+  --panel-bg: rgba(10, 25, 38, 0.85);
+  --panel-border: rgba(255, 255, 255, 0.10);
+
+  --accent: rgba(127, 212, 255, 0.50);
+  --accent-soft: rgba(127, 212, 255, 0.22);
+  --accent-soft-hover: rgba(127, 212, 255, 0.32);
+}
+
+[data-theme="darker"] {
+  --bg-1: #02060a;
+  --bg-2: #050b12;
+  --bg-3: #0a141e;
+  --text: #b8c8d0;
+  --muted: #607888;
+
+  --surface: rgba(255, 255, 255, 0.04);
+  --surface-hover: rgba(255, 255, 255, 0.09);
+  --border: rgba(255, 255, 255, 0.12);
+  --border-hover: rgba(255, 255, 255, 0.22);
+  --weak-surface: rgba(255, 255, 255, 0.025);
+  --weak-border: rgba(255, 255, 255, 0.05);
+  --panel-bg: rgba(0, 4, 8, 0.92);
+  --panel-border: rgba(255, 255, 255, 0.06);
+
+  --accent: rgba(127, 212, 255, 0.45);
+  --accent-soft: rgba(127, 212, 255, 0.18);
+  --accent-soft-hover: rgba(127, 212, 255, 0.28);
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -88,8 +122,8 @@ h1 {
 }
 .mode-item span { font-size: 1.2rem; }
 .mode-item.active {
-  background: rgba(127, 212, 255, 0.22);
-  border-color: rgba(127, 212, 255, 0.5);
+  background: var(--accent-soft);
+  border-color: var(--accent);
 }
 
 /* ---- views (crossfade between tabs) ---- */
@@ -137,8 +171,8 @@ footer {
 }
 
 button {
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: var(--surface);
+  border: 1px solid var(--border);
   color: var(--text);
   padding: 0.85rem 1.6rem;
   font-size: 1.05rem;
@@ -151,20 +185,20 @@ button {
 }
 
 button:hover {
-  background: rgba(255, 255, 255, 0.14);
-  border-color: rgba(255, 255, 255, 0.3);
+  background: var(--surface-hover);
+  border-color: var(--border-hover);
 }
 button:active { transform: scale(0.97); }
 
 button.primary {
-  background: rgba(127, 212, 255, 0.22);
-  border-color: rgba(127, 212, 255, 0.5);
+  background: var(--accent-soft);
+  border-color: var(--accent);
 }
-button.primary:hover { background: rgba(127, 212, 255, 0.32); }
+button.primary:hover { background: var(--accent-soft-hover); }
 
 button.toggle.active {
-  background: rgba(127, 212, 255, 0.22);
-  border-color: rgba(127, 212, 255, 0.5);
+  background: var(--accent-soft);
+  border-color: var(--accent);
 }
 
 .pattern-row {
@@ -227,9 +261,9 @@ button.toggle.active {
   height: 100vh;
   width: 320px;
   max-width: 88vw;
-  background: rgba(10, 25, 38, 0.85);
+  background: var(--panel-bg);
   backdrop-filter: blur(16px);
-  border-left: 1px solid rgba(255, 255, 255, 0.1);
+  border-left: 1px solid var(--panel-border);
   transform: translateX(100%);
   transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   padding: 5rem 1.8rem 2rem;
@@ -250,6 +284,30 @@ button.toggle.active {
   margin-bottom: 0.4rem;
 }
 
+.theme-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.2rem 0.2rem 0.6rem;
+  border-bottom: 1px solid var(--weak-border);
+}
+.theme-row-label {
+  font-size: 0.75rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.theme-toggle {
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+}
+
 .section-toggle {
   display: flex;
   justify-content: space-between;
@@ -265,12 +323,12 @@ button.toggle.active {
   color: var(--muted);
   cursor: pointer;
   border-radius: 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid var(--weak-border);
 }
 .section-toggle:hover {
   background: transparent;
   color: var(--text);
-  border-bottom-color: rgba(255, 255, 255, 0.18);
+  border-bottom-color: var(--border);
 }
 .section-toggle .chev {
   font-size: 0.9rem;
@@ -317,7 +375,7 @@ input[type="range"] {
   appearance: none;
   width: 100%;
   height: 6px;
-  background: rgba(255, 255, 255, 0.08);
+  background: var(--surface);
   border-radius: 999px;
   outline: none;
   cursor: pointer;

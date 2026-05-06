@@ -15,6 +15,13 @@
   </button>
 
   <aside class="mixer" id="mixer">
+    <div class="theme-row">
+      <span class="theme-row-label">Theme</span>
+      <button id="themeToggle" class="theme-toggle" aria-label="Toggle theme">
+        <span class="theme-icon">🌙</span>
+      </button>
+    </div>
+
     <h2>Mode</h2>
     <div class="mode-list">
       <button data-mode="breathe" class="mode-item active"><span>🫧</span> Breathe</button>
@@ -74,7 +81,35 @@
       <div class="pattern-row" id="patterns">
         <button data-pattern="box" class="toggle active">Box · 4-4-4-4</button>
         <button data-pattern="478" class="toggle">Calm · 4-7-8</button>
+        <button data-pattern="extended" class="toggle">Extended · 4-2-7</button>
         <button data-pattern="resonant" class="toggle">Resonant · 5-5</button>
+        <button data-pattern="custom" class="toggle">Custom</button>
+      </div>
+      <div class="custom-panel" id="customPanel" hidden>
+        <div class="stepper">
+          <span class="stepper-label">Inhale</span>
+          <button class="stepper-btn" data-step="inhale" data-delta="-1" aria-label="Decrease inhale">−</button>
+          <span class="stepper-value" id="customInhale">4</span>
+          <button class="stepper-btn" data-step="inhale" data-delta="1" aria-label="Increase inhale">+</button>
+        </div>
+        <div class="stepper">
+          <span class="stepper-label">Hold</span>
+          <button class="stepper-btn" data-step="hold1" data-delta="-1" aria-label="Decrease hold">−</button>
+          <span class="stepper-value" id="customHold1">4</span>
+          <button class="stepper-btn" data-step="hold1" data-delta="1" aria-label="Increase hold">+</button>
+        </div>
+        <div class="stepper">
+          <span class="stepper-label">Exhale</span>
+          <button class="stepper-btn" data-step="exhale" data-delta="-1" aria-label="Decrease exhale">−</button>
+          <span class="stepper-value" id="customExhale">8</span>
+          <button class="stepper-btn" data-step="exhale" data-delta="1" aria-label="Increase exhale">+</button>
+        </div>
+        <div class="stepper">
+          <span class="stepper-label">Hold</span>
+          <button class="stepper-btn" data-step="hold2" data-delta="-1" aria-label="Decrease hold">−</button>
+          <span class="stepper-value" id="customHold2">0</span>
+          <button class="stepper-btn" data-step="hold2" data-delta="1" aria-label="Increase hold">+</button>
+        </div>
       </div>
       <div class="controls">
         <button id="startBtn" class="primary">Start</button>

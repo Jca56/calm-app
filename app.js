@@ -1,5 +1,29 @@
 // Top-level wiring: mode switcher (in menu panel) + sound mixer + keyboard shortcuts.
 (function () {
+  // ---- theme (default dark / darker) ----
+  const THEME_KEY = 'calm.theme';
+  const themeToggle = document.getElementById('themeToggle');
+  const themeIcon = themeToggle.querySelector('.theme-icon');
+
+  function applyTheme(theme) {
+    if (theme === 'darker') {
+      document.documentElement.setAttribute('data-theme', 'darker');
+      themeIcon.textContent = '🌑';
+    } else {
+      document.documentElement.removeAttribute('data-theme');
+      themeIcon.textContent = '🌙';
+    }
+  }
+
+  let savedTheme = localStorage.getItem(THEME_KEY) || 'dark';
+  applyTheme(savedTheme);
+
+  themeToggle.addEventListener('click', () => {
+    savedTheme = (savedTheme === 'darker') ? 'dark' : 'darker';
+    localStorage.setItem(THEME_KEY, savedTheme);
+    applyTheme(savedTheme);
+  });
+
   const modeBtns = document.querySelectorAll('.mode-list .mode-item');
   const views = document.querySelectorAll('.view');
   const subtitleEl = document.querySelector('.subtitle');
@@ -95,6 +119,6 @@
     }
   });
 
-  // boot: turn on aurora since breathe is the default mode
+  // boot: aurora on for the default breathe tab
   if (window.Aurora) window.Aurora.setActive(true);
 })();

@@ -20,7 +20,7 @@
   box-shadow:
     0 0 80px 10px rgba(127, 212, 255, 0.35),
     inset -30px -50px 80px rgba(0, 30, 60, 0.4),
-    inset 20px 30px 60px rgba(255, 255, 255, 0.15);
+    inset 20px 30px 60px var(--surface-hover);
   transform: scale(0.55);
   transition: transform 4s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -62,6 +62,47 @@
   letter-spacing: 0.15em;
 }
 
+/* ---- custom breathing builder ---- */
+.custom-panel {
+  display: flex;
+  gap: 1.4rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+.custom-panel[hidden] { display: none; }
+
+.stepper {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+.stepper-label {
+  font-size: 0.7rem;
+  color: var(--muted);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-right: 0.2rem;
+}
+.stepper-btn {
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border-radius: 50%;
+  font-size: 1.1rem;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.stepper-value {
+  min-width: 1.6rem;
+  text-align: center;
+  font-size: 1.05rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--text);
+}
+
 /* ---- grounding view ---- */
 .ground-stage {
   flex: 1;
@@ -79,7 +120,7 @@
   font-weight: 200;
   line-height: 1;
   color: var(--orb-1);
-  text-shadow: 0 0 40px rgba(127, 212, 255, 0.5);
+  text-shadow: 0 0 40px var(--accent);
   letter-spacing: -0.05em;
   transition: opacity 0.5s ease, transform 0.5s ease;
 }
@@ -111,8 +152,8 @@
   width: 14px;
   height: 14px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.15);
-  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: var(--surface-hover);
+  border: 1px solid var(--border-hover);
   transition: background 0.4s ease, transform 0.3s ease, box-shadow 0.4s ease;
 }
 .ground-dots .dot.filled {
@@ -174,7 +215,7 @@
 .scan-progress-track {
   width: min(80%, 22rem);
   height: 3px;
-  background: rgba(255, 255, 255, 0.08);
+  background: var(--weak-border);
   border-radius: 999px;
   overflow: hidden;
 }
@@ -247,8 +288,8 @@
   letter-spacing: 0.05em;
 }
 .symmetry-row button.active {
-  background: rgba(127, 212, 255, 0.22);
-  border-color: rgba(127, 212, 255, 0.5);
+  background: var(--accent-soft);
+  border-color: var(--accent);
 }
 
 /* ---- worry dump ---- */
@@ -330,8 +371,8 @@
 }
 .worry-themes:empty { display: none; }
 .theme-chip {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: var(--surface);
+  border: 1px solid var(--border);
   border-radius: 999px;
   padding: 0.3rem 0.8rem 0.3rem 0.85rem;
   font-size: 0.85rem;
@@ -341,12 +382,12 @@
   transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }
 .theme-chip:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--surface-hover);
   color: var(--text);
 }
 .theme-chip.active {
-  background: rgba(127, 212, 255, 0.22);
-  border-color: rgba(127, 212, 255, 0.5);
+  background: var(--accent-soft);
+  border-color: var(--accent);
   color: var(--text);
 }
 .theme-chip .count {
@@ -354,7 +395,7 @@
   padding: 0 0.4rem;
   font-size: 0.72rem;
   color: var(--muted);
-  background: rgba(0, 0, 0, 0.2);
+  background: var(--weak-border);
   border-radius: 999px;
 }
 .theme-chip.active .count { color: var(--text); }
@@ -372,8 +413,8 @@ textarea#worryText {
   width: 100%;
   min-height: 200px;
   resize: vertical;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: var(--surface);
+  border: 1px solid var(--border);
   border-radius: 14px;
   padding: 1.2rem;
   color: var(--text);
@@ -385,7 +426,7 @@ textarea#worryText {
   user-select: text;
 }
 textarea#worryText:focus {
-  border-color: rgba(127, 212, 255, 0.45);
+  border-color: var(--accent);
   background: rgba(255, 255, 255, 0.07);
 }
 textarea#worryText::placeholder {
@@ -419,8 +460,8 @@ textarea#worryText.releasing {
 
 .worry-item {
   position: relative;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--weak-surface);
+  border: 1px solid var(--weak-border);
   border-radius: 10px;
   padding: 0.7rem 2.2rem 0.7rem 0.9rem;
 }
@@ -455,7 +496,7 @@ textarea#worryText.releasing {
 }
 .worry-del:hover {
   color: var(--text);
-  background: rgba(255, 255, 255, 0.08);
+  background: var(--weak-border);
 }
 
 @media (max-width: 600px) {
